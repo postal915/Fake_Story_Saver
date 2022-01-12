@@ -1,16 +1,18 @@
 package com.example.fakestorysaver.del
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fakestorysaver.R
-
-const val ARG_OBJECT = "object"
+import com.example.fakestorysaver.adapter.RecyclerViewAdapter
+import kotlinx.android.synthetic.main.fragment_number.*
 
 class NumberFragment : Fragment() {
+
+    private val adapter by lazy { RecyclerViewAdapter(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -20,10 +22,12 @@ class NumberFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        arguments?.takeIf { it.containsKey(ARG_OBJECT) }?.apply {
-            val textView: TextView = view.findViewById(R.id.textView)
-            textView.text = getInt(ARG_OBJECT).toString()
-        }
+
+        setupRecyclerViewAdapter()
     }
 
+    private fun setupRecyclerViewAdapter() {
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    }
 }
